@@ -1,0 +1,2045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Women's Cricket Team - Interactive Showcase</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <style>
+        :root {
+            /* Color Palette - India Tricolour Theme */
+            --color-saffron: #FF9933;
+            --color-white: #FFFFFF;
+            --color-green: #138808;
+            --color-navy: #000080;
+            --color-dark: #0A0A0A;
+            --color-light: #F5F5F5;
+            --color-gray: #6B7280;
+            
+            /* Gradients */
+            --gradient-hero: linear-gradient(135deg, rgba(255,153,51,0.2) 0%, rgba(255,255,255,0.1) 50%, rgba(19,136,8,0.2) 100%);
+            --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            --gradient-glow: linear-gradient(90deg, var(--color-saffron), var(--color-white), var(--color-green));
+            --gradient-overlay: linear-gradient(to bottom, rgba(10,10,10,0.7), rgba(10,10,10,0.9));
+            
+            /* Typography */
+            --font-primary: 'Inter', sans-serif;
+            --font-display: 'Poppins', sans-serif;
+            
+            /* Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2rem;
+            --space-xl: 3rem;
+            --space-2xl: 5rem;
+            
+            /* Border Radius */
+            --radius-sm: 0.5rem;
+            --radius-md: 1rem;
+            --radius-lg: 1.5rem;
+            --radius-xl: 2rem;
+            --radius-2xl: 3rem;
+            
+            /* Shadows */
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-glow: 0 0 20px rgba(255, 153, 51, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-primary);
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--color-white);
+            background-color: var(--color-dark);
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.1;
+            overflow: hidden;
+        }
+        
+        .flag-stripes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .stripe {
+            flex: 1;
+            position: relative;
+        }
+        
+        .saffron-stripe {
+            background: var(--color-saffron);
+        }
+        
+        .white-stripe {
+            background: var(--color-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .green-stripe {
+            background: var(--color-green);
+        }
+        
+        .ashoka-chakra {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid var(--color-navy);
+            position: relative;
+            animation: rotate 20s linear infinite;
+        }
+        
+        .spoke {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 40px;
+            background: var(--color-navy);
+            transform-origin: 0 0;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .floating-items {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .floating-item {
+            position: absolute;
+            opacity: 0.1;
+            font-size: 2rem;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-20px) translateX(20px) rotate(90deg);
+            }
+            50% {
+                transform: translateY(0) translateX(40px) rotate(180deg);
+            }
+            75% {
+                transform: translateY(20px) translateX(20px) rotate(270deg);
+            }
+            100% {
+                transform: translateY(0) translateX(0) rotate(360deg);
+            }
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: var(--space-md);
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+        }
+        
+        h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            position: relative;
+        }
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient-glow);
+            border-radius: 2px;
+        }
+        
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+        }
+        
+        p {
+            margin-bottom: var(--space-md);
+        }
+        
+        a {
+            color: var(--color-white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-sm) var(--space-lg);
+            border-radius: var(--radius-xl);
+            font-weight: 600;
+            font-size: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-glow);
+            color: var(--color-dark);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 153, 51, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-white);
+            border: 2px solid var(--color-white);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--color-white);
+            color: var(--color-dark);
+        }
+        
+        section {
+            padding: var(--space-2xl) 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--color-gray);
+            max-width: 600px;
+            margin: 0 auto var(--space-lg);
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-overlay);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 0 var(--space-md);
+            z-index: 1;
+        }
+        
+        .hero-title {
+            margin-bottom: var(--space-md);
+            background: var(--gradient-glow);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: var(--space-xl);
+            color: var(--color-light);
+        }
+        
+        .hero-actions {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .hero-icons {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-xl);
+            margin-top: var(--space-xl);
+        }
+        
+        .hero-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-card);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* 2025 Victory Banner */
+        .victory-banner {
+            background: var(--gradient-glow);
+            color: var(--color-dark);
+            padding: var(--space-md);
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            border-radius: var(--radius-lg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .victory-banner h3 {
+            margin-bottom: var(--space-sm);
+            font-size: 1.8rem;
+        }
+        
+        .victory-banner p {
+            margin-bottom: 0;
+            font-weight: 600;
+        }
+        
+        .trophy-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2.5rem;
+            opacity: 0.7;
+        }
+        
+        /* Player Profiles */
+        .players-section {
+            background: linear-gradient(to bottom, var(--color-dark), #1a1a1a);
+        }
+        
+        .players-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--space-lg);
+        }
+        
+        .player-card {
+            background: var(--gradient-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .player-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+        
+        .player-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .player-info {
+            padding: var(--space-md);
+        }
+        
+        .player-name {
+            font-size: 1.5rem;
+            margin-bottom: var(--space-xs);
+        }
+        
+        .player-role {
+            display: inline-block;
+            padding: var(--space-xs) var(--space-sm);
+            background: var(--color-saffron);
+            color: var(--color-dark);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .player-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: var(--space-sm);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-saffron);
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--color-gray);
+        }
+        
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: var(--gradient-card);
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: var(--space-xl);
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: var(--space-md);
+            right: var(--space-md);
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--color-white);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .modal-player-header {
+            display: flex;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .modal-player-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--radius-lg);
+        }
+        
+        .modal-player-info {
+            flex: 1;
+        }
+        
+        .modal-player-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: var(--space-md);
+            margin: var(--space-lg) 0;
+        }
+        
+        .modal-stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+        
+        .modal-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-saffron);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .modal-stat-label {
+            font-size: 0.9rem;
+            color: var(--color-gray);
+        }
+        
+        /* Performance Dashboard */
+        .dashboard-section {
+            background: linear-gradient(to bottom, #1a1a1a, var(--color-dark));
+        }
+        
+        .kpi-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .kpi-card {
+            background: var(--gradient-card);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .kpi-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-saffron);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .kpi-label {
+            font-size: 1rem;
+            color: var(--color-gray);
+        }
+        
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--space-lg);
+        }
+        
+        .chart-card {
+            background: var(--gradient-card);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* Timeline */
+        .timeline-section {
+            background: linear-gradient(to bottom, var(--color-dark), #1a1a1a);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: var(--gradient-glow);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: var(--color-white);
+            border: 4px solid var(--color-saffron);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(odd)::after {
+            right: -13px;
+        }
+        
+        .timeline-item:nth-child(even)::after {
+            left: -13px;
+        }
+        
+        .timeline-content {
+            padding: var(--space-lg);
+            background: var(--gradient-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .timeline-date {
+            font-weight: 700;
+            color: var(--color-saffron);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .timeline-title {
+            font-size: 1.2rem;
+            margin-bottom: var(--space-sm);
+        }
+        
+        /* Match Recap */
+        .match-recap-section {
+            background: linear-gradient(to bottom, #1a1a1a, var(--color-dark));
+        }
+        
+        .match-card {
+            background: var(--gradient-card);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow-md);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .teams {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+        
+        .team {
+            text-align: center;
+        }
+        
+        .team-logo {
+            width: 60px;
+            height: 60px;
+            background: var(--color-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-xs);
+            font-weight: 700;
+            color: var(--color-dark);
+        }
+        
+        .vs {
+            font-weight: 700;
+            color: var(--color-saffron);
+        }
+        
+        .match-result {
+            text-align: center;
+            margin: var(--space-lg) 0;
+        }
+        
+        .result {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-green);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .top-performers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-lg);
+        }
+        
+        .performer-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .performer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .player-of-match {
+            background: var(--gradient-glow);
+            color: var(--color-dark);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .player-of-match::before {
+            content: '⭐';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        /* Future Predictions */
+        .predictions-section {
+            background: linear-gradient(to bottom, var(--color-dark), #1a1a1a);
+        }
+        
+        .predictions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-lg);
+        }
+        
+        .prediction-card {
+            background: var(--gradient-card);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .prediction-card::before {
+            content: 'PREDICTION';
+            position: absolute;
+            top: 10px;
+            right: -30px;
+            background: var(--color-saffron);
+            color: var(--color-dark);
+            padding: 5px 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            transform: rotate(45deg);
+        }
+        
+        .confidence-meter {
+            margin-top: var(--space-md);
+        }
+        
+        .meter-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-xs);
+        }
+        
+        .meter-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .meter-fill {
+            height: 100%;
+            background: var(--gradient-glow);
+            border-radius: 5px;
+            width: 0;
+            transition: width 1s ease;
+        }
+        
+        /* About Section */
+        .about-section {
+            background: linear-gradient(to bottom, #1a1a1a, var(--color-dark));
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-xl);
+            align-items: center;
+        }
+        
+        .about-text {
+            padding-right: var(--space-lg);
+        }
+        
+        .about-map {
+            position: relative;
+            height: 400px;
+            background: var(--gradient-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            color: var(--color-gray);
+            font-size: 1.2rem;
+        }
+        
+        /* Fan Gallery */
+        .gallery-section {
+            background: linear-gradient(to bottom, var(--color-dark), #1a1a1a);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--space-md);
+        }
+        
+        .gallery-item {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            height: 200px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #0A0A0A;
+            padding: var(--space-2xl) 0 var(--space-lg);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-xl);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: var(--space-md);
+            background: var(--gradient-glow);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: var(--space-md);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: var(--space-xs);
+        }
+        
+        .footer-links a {
+            color: var(--color-gray);
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--color-white);
+        }
+        
+        .partner-logos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-lg);
+            align-items: center;
+            justify-content: center;
+            margin: var(--space-xl) 0;
+        }
+        
+        .partner-logo {
+            width: 100px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-gray);
+            font-weight: 700;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: var(--space-lg);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--color-gray);
+            font-size: 0.9rem;
+        }
+        
+        .accessibility-options {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+            margin: var(--space-md) 0;
+        }
+        
+        .accessibility-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--color-white);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .accessibility-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .modal-player-header {
+                flex-direction: column;
+            }
+            
+            .modal-player-image {
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-text {
+                padding-right: 0;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item::after {
+                left: 18px;
+            }
+            
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+        
+        .mb-sm {
+            margin-bottom: var(--space-sm);
+        }
+        
+        .mb-md {
+            margin-bottom: var(--space-md);
+        }
+        
+        .mb-lg {
+            margin-bottom: var(--space-lg);
+        }
+        
+        .mb-xl {
+            margin-bottom: var(--space-xl);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="flag-stripes">
+            <div class="stripe saffron-stripe"></div>
+            <div class="stripe white-stripe">
+                <div class="ashoka-chakra" id="chakra">
+                    <!-- Spokes will be added via JavaScript -->
+                </div>
+            </div>
+            <div class="stripe green-stripe"></div>
+        </div>
+        <div class="floating-items" id="floatingItems">
+            <!-- Floating items will be added via JavaScript -->
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <!-- In a real implementation, you would use an actual video file -->
+            <source src="v1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Women Who Inspire</h1>
+                <p class="hero-subtitle">Celebrating the unstoppable force of Indian Women's Cricket Team</p>
+                <div class="victory-banner">
+                    <h3>🏆 World Cup 2025 Champions 🏆</h3>
+                    <p>Historic victory - India lifts the trophy after a spectacular tournament!</p>
+                    <div class="trophy-icon">🏆</div>
+                </div>
+                <div class="hero-actions">
+                    <a href="#players" class="btn btn-primary">Explore Squad</a>
+                    <a href="#timeline" class="btn btn-secondary">Watch Best Moments</a>
+                </div>
+                <div class="hero-icons">
+                    <div class="hero-icon">
+                        <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_kmfwc2sh.json" background="transparent" speed="1" style="width: 50px; height: 50px;" loop autoplay></lottie-player>
+                    </div>
+                    <div class="hero-icon">
+                        <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_6xfdtlzb.json" background="transparent" speed="1" style="width: 50px; height: 50px;" loop autoplay></lottie-player>
+                    </div>
+                    <div class="hero-icon">
+                        <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_uknmrclg.json" background="transparent" speed="1" style="width: 50px; height: 50px;" loop autoplay></lottie-player>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Player Profiles Section -->
+    <section id="players" class="players-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Meet The Squad</h2>
+                <p class="section-subtitle">Get to know the incredible athletes representing India on the global stage</p>
+            </div>
+            <div class="players-grid" id="playersGrid">
+                <!-- Player cards will be dynamically generated -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Dashboard -->
+    <section class="dashboard-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Performance Dashboard</h2>
+                <p class="section-subtitle">Key statistics and leaderboards from recent performances</p>
+            </div>
+            <div class="kpi-cards">
+                <div class="kpi-card">
+                    <div class="kpi-value" id="totalRuns">0</div>
+                    <div class="kpi-label">Total Runs (Last 12 Months)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="totalWickets">0</div>
+                    <div class="kpi-label">Total Wickets (Last 12 Months)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="winPercentage">0%</div>
+                    <div class="kpi-label">Win Percentage</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value" id="highestScore">0</div>
+                    <div class="kpi-label">Highest Team Score</div>
+                </div>
+            </div>
+            <div class="charts-container">
+                <div class="chart-card">
+                    <canvas id="runsChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <canvas id="wicketsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section id="timeline" class="timeline-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Historic Moments</h2>
+                <p class="section-subtitle">Relive the journey of Indian Women's Cricket through its defining moments</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2005</div>
+                        <h3 class="timeline-title">First Test Victory</h3>
+                        <p>India women registered their first Test victory against South Africa women.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2017</div>
+                        <h3 class="timeline-title">World Cup Finalists</h3>
+                        <p>Team reached the ICC Women's World Cup final, creating history and inspiring a nation.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2020</div>
+                        <h3 class="timeline-title">T20 World Cup Final</h3>
+                        <p>Reached the final of ICC Women's T20 World Cup in Australia.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2022</div>
+                        <h3 class="timeline-title">Commonwealth Games Silver</h3>
+                        <p>Won silver medal at the Commonwealth Games in Birmingham.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2023</div>
+                        <h3 class="timeline-title">Asian Games Gold</h3>
+                        <p>Clinched gold medal at the Asian Games, showcasing dominance in the continent.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2025</div>
+                        <h3 class="timeline-title">World Cup Champions</h3>
+                        <p>Historic victory! India wins the ICC Women's World Cup 2025, bringing the trophy home.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Match Recap Section -->
+    <section class="match-recap-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Recent Match Recap</h2>
+                <p class="section-subtitle">Highlights from the latest thrilling encounter</p>
+            </div>
+            <div class="match-card">
+                <div class="match-header">
+                    <div class="teams">
+                        <div class="team">
+                            <div class="team-logo">IND</div>
+                            <div class="team-name">India</div>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="team-logo">AUS</div>
+                            <div class="team-name">Australia</div>
+                        </div>
+                    </div>
+                    <div class="match-date">October 15, 2023</div>
+                </div>
+                <div class="match-result">
+                    <div class="result">India Won by 5 wickets</div>
+                    <div class="match-details">1st ODI • Wankhede Stadium, Mumbai</div>
+                </div>
+                <div class="match-summary">
+                    <p>In a thrilling encounter, the Indian women's cricket team chased down a competitive target with 2 overs to spare, showcasing exceptional batting performance in the death overs.</p>
+                </div>
+                <h3 class="text-center mb-lg">Top Performers</h3>
+                <div class="top-performers">
+                    <div class="performer-card player-of-match">
+                        <h4>Smriti Mandhana</h4>
+                        <p>78 runs (62 balls)</p>
+                        <div class="player-role">Batter</div>
+                    </div>
+                    <div class="performer-card">
+                        <h4>Deepti Sharma</h4>
+                        <p>3/42 (10 overs)</p>
+                        <div class="player-role">All-rounder</div>
+                    </div>
+                    <div class="performer-card">
+                        <h4>Jemimah Rodrigues</h4>
+                        <p>45 runs (38 balls)</p>
+                        <div class="player-role">Batter</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Predictions Section -->
+    <section class="predictions-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Future Outlook</h2>
+                <p class="section-subtitle">Expert predictions for the upcoming season</p>
+            </div>
+            <div class="predictions-grid">
+                <div class="prediction-card">
+                    <h3>World Cup 2025 Victory</h3>
+                    <p>After the historic 2025 win, India is set to dominate women's cricket for years to come with this talented squad.</p>
+                    <div class="confidence-meter">
+                        <div class="meter-label">
+                            <span>Confidence</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="meter-bar">
+                            <div class="meter-fill" data-width="95"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="prediction-card">
+                    <h3>Breakout Stars</h3>
+                    <p>Young all-rounders like Richa Ghosh and Shafali Verma are expected to make significant impacts in the coming year.</p>
+                    <div class="confidence-meter">
+                        <div class="meter-label">
+                            <span>Confidence</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="meter-bar">
+                            <div class="meter-fill" data-width="90"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="prediction-card">
+                    <h3>Tactical Evolution</h3>
+                    <p>Expect more aggressive batting approaches in powerplays and innovative bowling changes in middle overs.</p>
+                    <div class="confidence-meter">
+                        <div class="meter-label">
+                            <span>Confidence</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="meter-bar">
+                            <div class="meter-fill" data-width="85"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>About Indian Women's Cricket</h2>
+                <p class="section-subtitle">The journey from inception to global recognition</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>The Indian women's cricket team represents India in international women's cricket. Governed by the Board of Control for Cricket in India (BCCI), the team played its first Test match in 1976 against the West Indies.</p>
+                    <p>Over the years, the team has grown in stature and performance, with notable achievements including reaching the finals of the 2005 World Cup, 2017 World Cup, and 2020 ICC Women's T20 World Cup.</p>
+                    <p>The historic 2025 World Cup victory marked a new era for women's cricket in India, inspiring millions of young girls to take up the sport.</p>
+                    <p>Today, the team boasts world-class players across all formats and continues to make the nation proud with their performances on the global stage.</p>
+                </div>
+                <div class="about-map">
+                    <div class="map-placeholder">
+                        Interactive Map of Player Origins
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fan Gallery Section -->
+    <section class="gallery-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Fan Gallery</h2>
+                <p class="section-subtitle">Celebrating the passionate supporters of women's cricket</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background: linear-gradient(135deg, #FF9933, #138808);"></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background: linear-gradient(135deg, #138808, #000080);"></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background: linear-gradient(135deg, #000080, #FF9933);"></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background: linear-gradient(135deg, #FF9933, #FFFFFF);"></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background: linear-gradient(135deg, #FFFFFF, #138808);"></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-image" style="background: linear-gradient(135deg, #138808, #FF9933);"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">Women In Blue</div>
+                    <p>Celebrating the achievements and journey of the Indian Women's Cricket Team. Join us in supporting these incredible athletes.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#players">Player Profiles</a></li>
+                        <li><a href="#timeline">Historic Moments</a></li>
+                        <li><a href="#">Statistics</a></li>
+                        <li><a href="#">Upcoming Matches</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">News & Updates</a></li>
+                        <li><a href="#">Match Schedules</a></li>
+                        <li><a href="#">Player Interviews</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="accessibility-options">
+                <button class="accessibility-btn" id="fontIncrease">A+</button>
+                <button class="accessibility-btn" id="fontDecrease">A-</button>
+                <button class="accessibility-btn" id="highContrast">High Contrast</button>
+            </div>
+            <div class="partner-logos">
+                <div class="partner-logo">BCCI</div>
+                <div class="partner-logo">ICC</div>
+                <div class="partner-logo">SPONSOR</div>
+                <div class="partner-logo">PARTNER</div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Indian Women's Cricket Team Showcase. All rights reserved.</p>
+                <p>Data sourced from official records. This is a demonstration website.</p>
+                <button class="btn btn-secondary mt-2" id="downloadStats">Download Player Stats (CSV)</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Player Modal -->
+    <div class="modal" id="playerModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <div id="modalContent">
+                <!-- Modal content will be dynamically generated -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Player Data
+        const players = [
+            {
+                id: 1,
+                name: "Harmanpreet Kaur",
+                role: "All-rounder",
+                jersey: 7,
+                dob: "1993-03-08",
+                battingStyle: "Right-handed",
+                bowlingStyle: "Right-arm offbreak",
+                debut: "2009-03-07",
+                matches: { test: 3, odi: 127, t20: 147 },
+                runs: { total: 4321, highest: 171, average: 35.2 },
+                wickets: { total: 34, best: "2/16", average: 28.4 },
+                strikeRate: 106.5,
+                economy: 5.2,
+                highlights: [
+                    "First Indian woman to score a century in T20I",
+                    "ICC Women's T20I Player of the Year 2022",
+                    "Captain of the Indian women's cricket team",
+                    "Led India to 2025 World Cup victory"
+                ],
+                whyMatters: "A dynamic leader and powerful hitter who has transformed India's batting approach in limited-overs cricket.",
+                image: "https://via.placeholder.com/300x400/FF9933/FFFFFF?text=Harmanpreet+Kaur"
+            },
+            {
+                id: 2,
+                name: "Smriti Mandhana",
+                role: "Batter",
+                jersey: 18,
+                dob: "1996-07-18",
+                battingStyle: "Left-handed",
+                bowlingStyle: "Right-arm medium",
+                debut: "2013-04-10",
+                matches: { test: 4, odi: 78, t20: 116 },
+                runs: { total: 3876, highest: 135, average: 43.1 },
+                wickets: { total: 8, best: "1/6", average: 22.5 },
+                strikeRate: 122.3,
+                economy: 6.1,
+                highlights: [
+                    "ICC Women's Cricketer of the Year 2018",
+                    "Fastest Indian woman to 2000 ODI runs",
+                    "First Indian woman to score a century in WBBL",
+                    "Key player in 2025 World Cup victory"
+                ],
+                whyMatters: "Elegant left-handed opener who combines classical technique with modern aggression at the top of the order.",
+                image: "https://via.placeholder.com/300x400/138808/FFFFFF?text=Smriti+Mandhana"
+            },
+            {
+                id: 3,
+                name: "Shafali Verma",
+                role: "Batter",
+                jersey: 21,
+                dob: "2004-01-28",
+                battingStyle: "Right-handed",
+                bowlingStyle: "Right-arm offbreak",
+                debut: "2019-09-24",
+                matches: { test: 2, odi: 25, t20: 56 },
+                runs: { total: 1456, highest: 96, average: 28.5 },
+                wickets: { total: 5, best: "1/6", average: 18.2 },
+                strikeRate: 134.7,
+                economy: 6.8,
+                highlights: [
+                    "Youngest Indian to play T20I (15 years)",
+                    "Fastest to 500 runs in T20I cricket",
+                    "ICC Emerging Player of the Year 2020",
+                    "Match-winning performances in 2025 World Cup"
+                ],
+                whyMatters: "Explosive young opener who brings fearless aggression to the powerplay, revolutionizing India's T20 approach.",
+                image: "https://via.placeholder.com/300x400/000080/FFFFFF?text=Shafali+Verma"
+            },
+            {
+                id: 4,
+                name: "Deepti Sharma",
+                role: "All-rounder",
+                jersey: 6,
+                dob: "1997-08-24",
+                battingStyle: "Right-handed",
+                bowlingStyle: "Right-arm offbreak",
+                debut: "2014-11-28",
+                matches: { test: 2, odi: 82, t20: 92 },
+                runs: { total: 1890, highest: 188, average: 32.6 },
+                wickets: { total: 104, best: "6/20", average: 22.1 },
+                strikeRate: 78.5,
+                economy: 4.2,
+                highlights: [
+                    "Highest individual score by an Indian woman in ODIs (188)",
+                    "First Indian woman to take 100 wickets and score 1000 runs in ODIs",
+                    "ICC Women's T20I Player of the Year nominee 2021",
+                    "Crucial all-round performance in 2025 World Cup final"
+                ],
+                whyMatters: "Versatile all-rounder who provides crucial balance to the team with her economical bowling and valuable lower-order runs.",
+                image: "https://via.placeholder.com/300x400/FF9933/FFFFFF?text=Deepti+Sharma"
+            },
+            {
+                id: 5,
+                name: "Jemimah Rodrigues",
+                role: "Batter",
+                jersey: 5,
+                dob: "2000-09-05",
+                battingStyle: "Right-handed",
+                bowlingStyle: "Right-arm offbreak",
+                debut: "2018-02-13",
+                matches: { test: 1, odi: 35, t20: 80 },
+                runs: { total: 1567, highest: 112, average: 33.3 },
+                wickets: { total: 2, best: "1/10", average: 25.5 },
+                strikeRate: 108.9,
+                economy: 6.2,
+                highlights: [
+                    "Youngest Indian to score a half-century in T20I",
+                    "Played in multiple overseas T20 leagues",
+                    "Known for innovative stroke play",
+                    "Consistent performer in 2025 World Cup"
+                ],
+                whyMatters: "Dynamic middle-order batter with exceptional ability to rotate strike and accelerate when needed.",
+                image: "https://via.placeholder.com/300x400/138808/FFFFFF?text=Jemimah+Rodrigues"
+            },
+            {
+                id: 6,
+                name: "Richa Ghosh",
+                role: "Wicketkeeper-Batter",
+                jersey: 10,
+                dob: "2003-09-28",
+                battingStyle: "Right-handed",
+                bowlingStyle: "N/A",
+                debut: "2020-02-07",
+                matches: { test: 0, odi: 22, t20: 38 },
+                runs: { total: 789, highest: 65, average: 26.3 },
+                wickets: { total: 0, best: "N/A", average: 0 },
+                strikeRate: 118.6,
+                economy: 0,
+                highlights: [
+                    "Powerful finisher known for big hitting",
+                    "Youngest in Indian squad for 2020 T20 World Cup",
+                    "Exceptional wicketkeeping skills",
+                    "Key contributor in 2025 World Cup victory"
+                ],
+                whyMatters: "Aggressive finisher and reliable wicketkeeper who adds firepower to the lower middle order.",
+                image: "https://via.placeholder.com/300x400/000080/FFFFFF?text=Richa+Ghosh"
+            }
+        ];
+
+        // DOM Elements
+        const playersGrid = document.getElementById('playersGrid');
+        const playerModal = document.getElementById('playerModal');
+        const closeModal = document.getElementById('closeModal');
+        const modalContent = document.getElementById('modalContent');
+        const downloadStatsBtn = document.getElementById('downloadStats');
+        const chakra = document.getElementById('chakra');
+        const floatingItems = document.getElementById('floatingItems');
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderPlayerCards();
+            initializeCharts();
+            initializeAnimations();
+            initializeEventListeners();
+            animateCounters();
+            createAshokaChakra();
+            createFloatingItems();
+        });
+
+        // Create Ashoka Chakra
+        function createAshokaChakra() {
+            for (let i = 0; i < 24; i++) {
+                const spoke = document.createElement('div');
+                spoke.className = 'spoke';
+                spoke.style.transform = `translate(-50%, -50%) rotate(${i * 15}deg)`;
+                chakra.appendChild(spoke);
+            }
+        }
+
+        // Create floating items
+        function createFloatingItems() {
+            const items = ['🏏', '🏆', '🇮🇳', '⭐', '🔥', '💫', '✨', '🎯'];
+            
+            for (let i = 0; i < 20; i++) {
+                const item = document.createElement('div');
+                item.className = 'floating-item';
+                item.textContent = items[Math.floor(Math.random() * items.length)];
+                item.style.left = `${Math.random() * 100}%`;
+                item.style.top = `${Math.random() * 100}%`;
+                item.style.animationDelay = `${Math.random() * 5}s`;
+                item.style.animationDuration = `${15 + Math.random() * 10}s`;
+                floatingItems.appendChild(item);
+            }
+        }
+
+        // Render player cards
+        function renderPlayerCards() {
+            playersGrid.innerHTML = '';
+            
+            players.forEach(player => {
+                const playerCard = document.createElement('div');
+                playerCard.className = 'player-card fade-in';
+                playerCard.innerHTML = `
+                    <img src="${player.image}" alt="${player.name}" class="player-image">
+                    <div class="player-info">
+                        <h3 class="player-name">${player.name}</h3>
+                        <span class="player-role">${player.role}</span>
+                        <p>Jersey #${player.jersey}</p>
+                        <div class="player-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">${player.matches.odi + player.matches.t20}</div>
+                                <div class="stat-label">Matches</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${player.runs.total}</div>
+                                <div class="stat-label">Runs</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">${player.wickets.total}</div>
+                                <div class="stat-label">Wickets</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                playerCard.addEventListener('click', () => openPlayerModal(player));
+                playersGrid.appendChild(playerCard);
+            });
+            
+            // Trigger fade-in animations after a short delay
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach(el => {
+                    el.classList.add('visible');
+                });
+            }, 100);
+        }
+
+        // Open player modal
+        function openPlayerModal(player) {
+            const age = calculateAge(player.dob);
+            
+            modalContent.innerHTML = `
+                <div class="modal-player-header">
+                    <img src="${player.image}" alt="${player.name}" class="modal-player-image">
+                    <div class="modal-player-info">
+                        <h2>${player.name}</h2>
+                        <p><strong>Role:</strong> ${player.role}</p>
+                        <p><strong>Jersey Number:</strong> ${player.jersey}</p>
+                        <p><strong>Age:</strong> ${age} years</p>
+                        <p><strong>Batting Style:</strong> ${player.battingStyle}</p>
+                        <p><strong>Bowling Style:</strong> ${player.bowlingStyle}</p>
+                        <p><strong>International Debut:</strong> ${formatDate(player.debut)}</p>
+                    </div>
+                </div>
+                
+                <div class="modal-player-stats">
+                    <div class="modal-stat-card">
+                        <div class="modal-stat-value">${player.matches.test + player.matches.odi + player.matches.t20}</div>
+                        <div class="modal-stat-label">Total Matches</div>
+                    </div>
+                    <div class="modal-stat-card">
+                        <div class="modal-stat-value">${player.runs.total}</div>
+                        <div class="modal-stat-label">Total Runs</div>
+                    </div>
+                    <div class="modal-stat-card">
+                        <div class="modal-stat-value">${player.runs.highest}</div>
+                        <div class="modal-stat-label">Highest Score</div>
+                    </div>
+                    <div class="modal-stat-card">
+                        <div class="modal-stat-value">${player.runs.average}</div>
+                        <div class="modal-stat-label">Batting Average</div>
+                    </div>
+                    ${player.wickets.total > 0 ? `
+                    <div class="modal-stat-card">
+                        <div class="modal-stat-value">${player.wickets.total}</div>
+                        <div class="modal-stat-label">Total Wickets</div>
+                    </div>
+                    <div class="modal-stat-card">
+                        <div class="modal-stat-value">${player.wickets.best}</div>
+                        <div class="modal-stat-label">Best Bowling</div>
+                    </div>
+                    <div class="modal-stat-card">
+                        <div class="modal-stat-value">${player.wickets.average}</div>
+                        <div class="modal-stat-label">Bowling Average</div>
+                    </div>
+                    ` : ''}
+                    <div class="modal-stat-card">
+                        <div class="modal-stat-value">${player.strikeRate}</div>
+                        <div class="modal-stat-label">Strike Rate</div>
+                    </div>
+                </div>
+                
+                <div class="mb-lg">
+                    <h3>Career Highlights</h3>
+                    <ul>
+                        ${player.highlights.map(highlight => `<li>${highlight}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div class="mb-lg">
+                    <h3>Why She Matters</h3>
+                    <p>${player.whyMatters}</p>
+                </div>
+            `;
+            
+            playerModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            playerModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close modal when clicking outside
+        playerModal.addEventListener('click', (e) => {
+            if (e.target === playerModal) {
+                playerModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Initialize charts
+        function initializeCharts() {
+            // Runs Chart
+            const runsCtx = document.getElementById('runsChart').getContext('2d');
+            const runsChart = new Chart(runsCtx, {
+                type: 'bar',
+                data: {
+                    labels: players.map(p => p.name.split(' ')[0]),
+                    datasets: [{
+                        label: 'Total Runs',
+                        data: players.map(p => p.runs.total),
+                        backgroundColor: players.map((p, i) => 
+                            i % 3 === 0 ? '#FF9933' : i % 3 === 1 ? '#138808' : '#000080'
+                        ),
+                        borderColor: '#FFFFFF',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#FFFFFF'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: '#FFFFFF'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#FFFFFF'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Wickets Chart
+            const wicketsCtx = document.getElementById('wicketsChart').getContext('2d');
+            const wicketsChart = new Chart(wicketsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: players.filter(p => p.wickets.total > 0).map(p => p.name.split(' ')[0]),
+                    datasets: [{
+                        label: 'Total Wickets',
+                        data: players.filter(p => p.wickets.total > 0).map(p => p.wickets.total),
+                        backgroundColor: [
+                            '#FF9933', '#138808', '#000080', '#8B4513', '#FF69B4'
+                        ],
+                        borderColor: '#FFFFFF',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#FFFFFF',
+                                padding: 20
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize animations
+        function initializeAnimations() {
+            // Register ScrollTrigger plugin
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Animate sections on scroll
+            gsap.utils.toArray('.fade-in').forEach(section => {
+                gsap.fromTo(section, {
+                    opacity: 0,
+                    y: 50
+                }, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 80%',
+                        end: 'bottom 20%',
+                        toggleActions: 'play none none reverse'
+                    }
+                });
+            });
+            
+            // Animate confidence meters
+            const meterFills = document.querySelectorAll('.meter-fill');
+            meterFills.forEach(meter => {
+                const width = meter.getAttribute('data-width');
+                gsap.to(meter, {
+                    width: `${width}%`,
+                    duration: 1.5,
+                    delay: 0.5,
+                    scrollTrigger: {
+                        trigger: meter,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+        }
+
+        // Animate counters
+        function animateCounters() {
+            const totalRuns = players.reduce((sum, player) => sum + player.runs.total, 0);
+            const totalWickets = players.reduce((sum, player) => sum + player.wickets.total, 0);
+            const highestScore = Math.max(...players.map(player => player.runs.highest));
+            
+            // Animate total runs counter
+            gsap.to({}, {
+                duration: 2,
+                onUpdate: function() {
+                    const value = Math.floor(this.progress() * totalRuns);
+                    document.getElementById('totalRuns').textContent = value.toLocaleString();
+                },
+                scrollTrigger: {
+                    trigger: '#totalRuns',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                }
+            });
+            
+            // Animate total wickets counter
+            gsap.to({}, {
+                duration: 2,
+                onUpdate: function() {
+                    const value = Math.floor(this.progress() * totalWickets);
+                    document.getElementById('totalWickets').textContent = value;
+                },
+                scrollTrigger: {
+                    trigger: '#totalWickets',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                }
+            });
+            
+            // Animate win percentage
+            gsap.to({}, {
+                duration: 2,
+                onUpdate: function() {
+                    const value = Math.floor(this.progress() * 72);
+                    document.getElementById('winPercentage').textContent = `${value}%`;
+                },
+                scrollTrigger: {
+                    trigger: '#winPercentage',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                }
+            });
+            
+            // Animate highest score
+            gsap.to({}, {
+                duration: 2,
+                onUpdate: function() {
+                    const value = Math.floor(this.progress() * highestScore);
+                    document.getElementById('highestScore').textContent = value;
+                },
+                scrollTrigger: {
+                    trigger: '#highestScore',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                }
+            });
+        }
+
+        // Initialize event listeners
+        function initializeEventListeners() {
+            // Download stats button
+            downloadStatsBtn.addEventListener('click', downloadPlayerStats);
+            
+            // Accessibility buttons
+            document.getElementById('fontIncrease').addEventListener('click', increaseFontSize);
+            document.getElementById('fontDecrease').addEventListener('click', decreaseFontSize);
+            document.getElementById('highContrast').addEventListener('click', toggleHighContrast);
+        }
+
+        // Utility functions
+        function calculateAge(dob) {
+            const birthDate = new Date(dob);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            
+            return age;
+        }
+
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+
+        function downloadPlayerStats() {
+            // Create CSV content
+            let csvContent = "Name,Role,Jersey,Age,Batting Style,Matches,Runs,Highest Score,Batting Average,Wickets,Strike Rate\n";
+            
+            players.forEach(player => {
+                const age = calculateAge(player.dob);
+                const totalMatches = player.matches.test + player.matches.odi + player.matches.t20;
+                
+                csvContent += `"${player.name}","${player.role}",${player.jersey},${age},"${player.battingStyle}",${totalMatches},${player.runs.total},${player.runs.highest},${player.runs.average},${player.wickets.total},${player.strikeRate}\n`;
+            });
+            
+            // Create download link
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'indian-women-cricket-stats.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function increaseFontSize() {
+            document.body.style.fontSize = '18px';
+        }
+
+        function decreaseFontSize() {
+            document.body.style.fontSize = '14px';
+        }
+
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+        }
+    </script>
+</body>
+</html>
